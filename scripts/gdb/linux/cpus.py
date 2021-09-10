@@ -159,6 +159,7 @@ Note that VAR has to be quoted as string."""
 
 PerCpu()
 
+
 def get_current_task(cpu):
     task_ptr_type = task_type.get_type().pointer()
 
@@ -167,7 +168,7 @@ def get_current_task(cpu):
          return per_cpu(var_ptr, cpu).dereference()
     elif utils.is_target_arch("aarch64"):
          current_task_addr = gdb.parse_and_eval("$SP_EL0")
-         if((current_task_addr >> 63) != 0):
+         if ((current_task_addr >> 63) != 0):
              current_task = current_task_addr.cast(task_ptr_type)
              return current_task.dereference()
          else:
@@ -176,6 +177,7 @@ def get_current_task(cpu):
     else:
         raise gdb.GdbError("Sorry, obtaining the current task is not yet "
                            "supported with this arch")
+
 
 class LxCurrentFunc(gdb.Function):
     """Return current task.
